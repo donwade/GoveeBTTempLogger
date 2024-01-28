@@ -1,0 +1,16 @@
+#!/bin/bash
+rm -rf build
+mkdir build
+cd build
+cmake ..
+set -x
+sudo make install
+sudo systemctl enable goveebttemplogger.service
+sudo systemctl restart goveebttemplogger.service
+set +x
+RED "-------------------------------------"
+show-services | grep govee
+RED "-------------------------------------"
+sudo systemctl --no-pager status goveebttemplogger.service
+RED "--------showing logs in 4 seconds -----------------------------"; sleep 4
+watch ls -al /var/log/goveebttemplogger/
